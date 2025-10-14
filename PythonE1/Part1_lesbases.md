@@ -12,7 +12,7 @@ tp/ <-- sujet du tp
 
 * Comprendre la logique algorithmique et les bases de la programmation.
 * Maîtriser les structures fondamentales du langage Python.
-* Être capable d'écrire, organiser et tester des programmes simples.
+* Être capable d'écrire, organiser et "tester" des programmes simples.
 * Découvrir la notion d'objet, de module et de manipulation de données.
 
 ---
