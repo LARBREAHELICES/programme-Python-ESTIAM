@@ -1,360 +1,192 @@
-# Python – Structures, Fonctions et Classes 
+# **Plan – Python : Structures, Fonctions, Classes et Tests**
 
-## Objectifs pédagogiques
+## Plan
 
-1. Produire un guide d'installation et d'environnement (Python, venv, FastAPI, Uvicorn avec la virtualisation Python ).
+## **Rappels fondamentaux sur Python (niveau avancé)**
+### **1. Modèle d'exécution et typage**
+### **2. Références, copies et gestion mémoire**
+### **3. Structures de données complexes**
+## **Exceptions, documentation et fonctions avancées**
+### **4. Gestion des exceptions et robustesse du code**
+### **5. Documentation et docstrings**
+### **6. Fonctions avancées et programmation fonctionnelle**
+## **Classes, polymorphisme et tests**
+### **7. Introduction aux classes et objets**
+### **8. Héritage et polymorphisme**
+### **9. Tests unitaires avec Pytest**
 
-2. Organisation du cours sur deux jours.
 
-Jour 1, 2
+## **Objectifs pédagogiques**
 
-* Comprendre et manipuler les structures de données avancées en Python ( pas trop long ce sont théoriquement des rappels)
-* Maîtriser les fonctions, leur portée et les expressions lambda.
-* Concevoir des classes simples et comprendre les principes de la programmation orientée objet
-
-- Jour 3 Fast API - Introduction
-
-* Mettre en pratique ces notions dans un mini projet concret (TP FastAPI)
-
----
-
-## **Sommaire – Formation Python : Structures, Fonctions et Classes (2 jours)**
-
-### **Jour 1 – Manipulation de données et logique algorithmique**
-
-### 1. Introduction à Python et à la logique algorithmique
-
-1.1. Objectifs du module
-1.2. Concepts fondamentaux : types, variables, expressions
-1.3. Structure d'un script Python
-1.4. Règles de style et bonnes pratiques de code
-
-### 2. Les fichiers
-
-2.1. Lecture et écriture de fichiers
-2.2. Formats courants (texte, CSV, JSON)
-2.3. Manipulation de fichiers avec `pathlib`, `os`, `csv`, `json`
-2.4. Exercices : analyse et transformation de données stockées dans des fichiers
-
-### 3. Les tuples et l'unpacking
-
-3.1. Définition et propriétés des tuples
-3.2. Affectation multiple et itération parallèle
-3.3. Retour multiple de fonctions
-3.4. Exercices : traitement de données avec tuples et unpacking
-
-### 4. Les dictionnaires et tables de hash
-
-4.1. Dictionnaires : définition, syntaxe, opérations
-4.2. Clés immuables et gestion des collisions
-4.3. Dictionnaires imbriqués et compréhension de dictionnaires
-4.4. Exercices : fusion et agrégation de données par clé
-
-### 5. Les ensembles (sets)
-
-5.1. Notion d'unicité et d'opérations ensemblistes
-5.2. Utilisation algorithmique des ensembles
-5.3. Exercices : détection de doublons et filtrage de données
-
-### 6. Les exceptions et la gestion d'erreurs
-
-6.1. Structure `try / except / else / finally`
-6.2. Exceptions standards et personnalisées
-6.3. Stratégies de gestion d'erreurs dans les scripts
-6.4. Exercices : sécurisation des traitements de fichiers
-
-### 7. Les références partagées et la gestion mémoire
-
-7.1. Références et alias
-7.2. Différence entre `is` et `==`
-7.3. Copie superficielle et profonde (`copy`, `deepcopy`)
-7.4. Exercices : gestion des effets de bord dans des structures complexes
+1. Consolider la compréhension du modèle objet de Python et des structures de données complexes.
+2. Approfondir la maîtrise des fonctions, des expressions fonctionnelles et de la documentation technique.
+3. Concevoir et manipuler des classes en appliquant les principes de la programmation orientée objet.
+4. Comprendre le polymorphisme et la modularité du code orienté objet.
+5. Écrire des tests unitaires avec `pytest` pour valider le comportement du code.
 
 ---
 
-## **Jour 2 – Fonctions, portée et programmation orientée objet**
+## **Rappels fondamentaux sur Python (niveau avancé)**
 
-### 8. Les fonctions et la portée des variables
+### **1. Modèle d'exécution et typage**
 
-8.1. Définition et appel de fonctions
-8.2. Passage d'arguments, valeurs par défaut
-8.3. Règle LEGB (Local, Enclosing, Global, Builtin)
-8.4. Variables globales et `nonlocal`
-8.5. Documentation et typage des fonctions (`type hints`, docstrings)
-8.6. Exercices : fonctions analytiques et validation de paramètres
+1.1. Python comme langage interprété et typé dynamiquement.
+1.2. Typage fort vs typage faible.
+1.3. Typage par référence et identité des objets (`id()`, `is`, `==`).
+1.4. Objets immuables et mutables :
 
-### 9. Fonctions anonymes et programmation fonctionnelle (introduction)
+* Immuables : `int`, `float`, `str`, `tuple`
+* Mutables : `list`, `dict`, `set`
+  1.5. Implications du modèle mémoire sur la modification d'objets.
 
-9.1. Fonctions lambda
-9.2. Fonctions d'ordre supérieur : `map`, `filter`, `reduce`
-9.3. Compréhensions de listes, sets et dictionnaires
-9.4. Générateurs et expressions génératrices (`yield`)
-9.5. Exercices : transformation et agrégation fonctionnelle de données
+**Exercices :**
 
-### 10. Modules et espaces de nommage
-
-10.1. Organisation du code en modules et packages
-10.2. Importation (`import`, `from … import …`, `as`)
-10.3. Construction d'un module réutilisable (`utils.py`)
-10.4. Exercices : refactorisation du code en modules
-
-### 11. Introduction aux classes
-
-11.1. Concepts : classes, instances, attributs, méthodes
-11.2. Constructeur `__init__`, méthodes spéciales (`__str__`, `__repr__`)
-11.3. Encapsulation, propriétés et getters/setters
-11.4. Exercices : classe `DataSet` et manipulation de données
-
-### 12. Héritage et polymorphisme
-
-12.1. Héritage simple et redéfinition de méthodes
-12.2. Polymorphisme et typage dynamique
-12.3. Énumérations (`Enum`) et typage de classes
-12.4. Exercices : classes `Shape`, `Rectangle`, `Circle` ( par exemple )
-
-### 13. Travaux pratiques finaux – Mini API d'analyse
-
-13.1. Présentation de FastAPI
-13.2. Structure d'un projet FastAPI
-13.3. Création des endpoints d'analyse de données
-13.4. Validation des entrées avec Pydantic
-13.5. Test des routes via `requests` ou Swagger
-13.6. Évaluation du projet : robustesse, modularité, documentation
+* Montrer la différence entre deux variables pointant vers le même objet mutable.
+* Vérifier l'identité et l'égalité de plusieurs objets à l'aide de `is` et `==`.
 
 ---
 
+### **2. Références, copies et gestion mémoire**
 
-# Jour 1 – Structures de données et logique algorithmique
+2.1. Compréhension du mécanisme de référence.
+2.2. Copies superficielles et profondes (`copy`, `deepcopy`).
+2.3. Gestion du ramasse-miettes (garbage collector).
+2.4. Bonnes pratiques pour éviter les effets de bord.
 
-## Objectifs
+**Exercices :**
 
-Savoir manipuler les fichiers, tuples, dictionnaires, ensembles et exceptions. Comprendre les implications mémoire (références partagées) et préparer la base des traitements de données.
+* Créer une liste de listes, modifier une sous-liste et observer l'effet sur l'originale.
+* Comparer les comportements de `copy()` et `deepcopy()` sur une structure imbriquée.
 
 ---
 
-## Séquence 1. Les fichiers
+### **3. Structures de données complexes**
 
-**Contenu théorique :**
+3.1. Listes imbriquées, dictionnaires de listes et tuples composites.
+3.2. Compréhensions de listes, sets et dictionnaires (syntaxe et efficacité).
+3.3. Tri et filtrage avancés (`sorted`, `key`, `lambda`).
+3.4. Approche fonctionnelle : `map`, `filter`, `reduce`.
 
-* Ouvrir et fermer un fichier : `open`, `with`, modes (`'r'`, `'w'`, `'a'`, `'b'`)
-* Lire un fichier texte (`read`, `readlines`, itération ligne à ligne)
-* Écrire dans un fichier
-* Notions sur les formats courants : texte, CSV, JSON
-* Utilitaires : `os`, `pathlib`, `csv`, `json`
+**Exercices :**
+
+* À partir d'un dictionnaire de données, produire une liste triée selon une clé.
+* Filtrer et transformer une structure complexe avec des compréhensions.
+
+---
+
+## **Exceptions, documentation et fonctions avancées**
+
+### **4. Gestion des exceptions et robustesse du code**
+
+4.1. Structure `try / except / else / finally`.
+4.2. Levée d'exceptions personnalisées avec `raise`.
+4.3. Propagation et capture des erreurs.
+4.4. Bonnes pratiques : validation des entrées, messages d'erreur explicites.
+4.5. Création d'une hiérarchie d'exceptions propres à un module.
+
+**Exercices :**
+
+* Implémenter une fonction `safe_div(a, b)` qui gère la division par zéro avec une exception dédiée.
+* Écrire une fonction `read_file(path)` qui gère proprement les erreurs d'ouverture et de lecture.
+
+---
+
+### **5. Documentation et docstrings**
+
+5.1. Rôle et conventions des docstrings (PEP 257).
+5.2. Structure d'une docstring complète (paramètres, retours, exceptions).
+5.3. Interaction avec `help()` et génération de documentation automatique (`pdoc`, `Sphinx`).
+5.4. Typage statique avec `type hints` et vérification via `mypy`.
 
 **Exercice :**
 
-* Lire un fichier CSV de ventes et calculer le total des ventes par produit.
-* Sauvegarder le résultat dans un fichier JSON.
+* Documenter une fonction d'analyse statistique `analyse(liste: list[float]) -> dict[str, float]` avec une docstring structurée et des annotations de types.
 
 ---
 
-## Séquence 2. Les tuples et l'unpacking
+### **6. Fonctions avancées et programmation fonctionnelle**
 
-**Contenu :**
+6.1. Fonctions anonymes (`lambda`).
+6.2. Fonctions d'ordre supérieur : `map`, `filter`, `reduce`.
+6.3. Fonctions génératrices (`yield`) et expressions génératrices.
+6.4. Portée des variables (règle LEGB) et closures.
+6.5. Expressions conditionnelles (`x if cond else y`).
 
-* Création de tuples, immuabilité
-* Affectation multiple : `a, b = 1, 2`
-* Boucles avec unpacking : `for nom, valeur in liste_de_tuples`
-* Fonctions retournant plusieurs valeurs
+**Exercices :**
 
-**Exercice :**
-
-* Écrire une fonction `min_max(liste)` qui retourne un tuple `(min, max)`
-* Utiliser l'unpacking pour afficher ces deux valeurs.
-
----
-
-## Séquence 3. Dictionnaires (tables de hash)
-
-**Contenu :**
-
-* Définition, ajout, suppression, accès aux clés
-* Clés immuables, itération avec `.items()`
-* Fusion de dictionnaires (`|` ou `update`)
-* Dictionnaires imbriqués
-* Utilisation comme enregistrements
-
-**Exercice :**
-
-* Fusionner deux fichiers CSV en un dictionnaire unique indexé par une clé commune (ex. identifiant client).
-* Sauvegarder le résultat en JSON.
+* Reproduire le comportement d'un filtrage avec une fonction lambda.
+* Créer un générateur produisant les puissances successives d'un entier.
+* Implémenter une fonction d'ordre supérieur appliquant un traitement à une liste de fonctions.
 
 ---
 
-## Séquence 4. Ensembles (sets)
+## **Classes, polymorphisme et tests**
 
-**Contenu :**
+### **7. Introduction aux classes et objets**
 
-* Création, opérations d'union, intersection, différence
-* Vérification d'appartenance (`in`)
-* Cas d'usage : détection de doublons, suppression de valeurs répétées
+7.1. Définition d'une classe, constructeur `__init__`.
+7.2. Attributs d'instance et de classe.
+7.3. Méthodes d'instance et mot-clé `self`.
+7.4. Méthodes spéciales (`__str__`, `__repr__`, `__eq__`, `__len__`).
+7.5. Encapsulation et accès contrôlé via `@property`.
 
-**Exercice :**
+**Exercices :**
 
-* À partir d'une liste de valeurs contenant des doublons, créer un ensemble pour obtenir la liste des valeurs uniques.
-* Comparer les performances avec une boucle classique.
-
----
-
-## Séquence 5. Exceptions et gestion d'erreurs
-
-**Contenu :**
-
-* Syntaxe `try / except / else / finally`
-* Lever une exception (`raise`)
-* Création d'exceptions personnalisées
-* Bonnes pratiques : validation des entrées utilisateur
-
-**Exercice :**
-
-* Écrire une fonction `safe_div(a, b)` qui retourne la division et gère la division par zéro avec une exception personnalisée.
-* Utiliser `try / finally` pour consigner les erreurs dans un fichier log.
+* Créer une classe `BankAccount` avec dépôt, retrait et affichage du solde.
+* Ajouter une méthode `__str__()` pour afficher un résumé de l'état du compte.
 
 ---
 
-## Séquence 6. Références partagées et copies
+### **8. Héritage et polymorphisme**
 
-**Contenu :**
+8.1. Héritage simple et redéfinition de méthodes.
+8.2. Appel de la classe parente avec `super()`.
+8.3. Polymorphisme : méthodes partagées entre classes différentes.
+8.4. Introduction aux classes abstraites (`abc.ABC`).
+8.5. Utilisation de `isinstance()` et `issubclass()`.
 
-* Compréhension des références en Python
-* Différence entre `is` et `==`
-* Copies : `copy.copy` et `copy.deepcopy`
-* Effets de bord, alias de liste, références circulaires
-* L'instruction `del`
+**Exercices :**
 
-**Exercice :**
-
-* Montrer la différence entre deux listes liées par référence et deux listes indépendantes.
-* Expérimenter l'effet de `copy()` et `deepcopy()` sur des structures imbriquées.
-
----
-
-# Jour 2 – Fonctions, portée et programmation orientée objet
-
-## Objectifs
-
-Approfondir la logique fonctionnelle, comprendre la portée des variables, utiliser les lambda et comprehensions, puis aborder les classes et leur utilisation algorithmique. Application finale : création d'une mini API avec FastAPI.
+* Créer une classe `Shape` avec sous-classes `Rectangle` et `Circle`.
+* Implémenter `area()` et `perimeter()` dans chaque sous-classe.
+* Afficher les résultats via une boucle polymorphique parcourant une liste de formes.
 
 ---
 
-## Séquence 1. Fonctions et portée des variables
+### **9. Tests unitaires avec Pytest**
 
-**Contenu :**
+9.1. Principes du test unitaire et de la validation automatique.
+9.2. Installation et exécution de `pytest`.
+9.3. Structure d'un test (`assert`, nommage `test_*`).
+9.4. Tests paramétrés (`@pytest.mark.parametrize`).
+9.5. Tests d'exceptions (`pytest.raises`).
+9.6. Organisation d'un dossier de tests (`tests/`, `conftest.py`).
 
-* Définir une fonction avec `def`
-* Passage d'arguments, valeurs par défaut
-* Règle LEGB (Local, Enclosing, Global, Builtin)
-* Variables globales et `nonlocal`
-* Docstrings et `type hints` (`def f(a: int) -> int:`)
+**Exemples :**
 
-**Exercice :**
+```python
+# math_utils.py
+def safe_div(a, b):
+    if b == 0:
+        raise ZeroDivisionError("Division by zero is not allowed.")
+    return a / b
+```
 
-* Écrire une fonction `analyse(liste)` qui retourne la moyenne, la médiane et la variance d'une liste numérique.
-* Utiliser des annotations de type et une docstring complète.
+```python
+# tests/test_math_utils.py
+import pytest
+from math_utils import safe_div
 
----
+def test_safe_div_valid():
+    assert safe_div(10, 2) == 5
 
-## Séquence 2. Fonctions lambda, map, filter et comprehensions
+def test_safe_div_zero():
+    with pytest.raises(ZeroDivisionError):
+        safe_div(5, 0)
+```
 
-**Contenu :**
+**Exercices :**
 
-* Fonctions anonymes : `lambda x: x * 2`
-* Fonctions d'ordre supérieur : `map`, `filter`, `reduce`
-* Compréhensions de listes, sets et dictionnaires
-* Expressions génératrices et `yield`
-
-**Exercice :**
-
-* Reprendre une liste de ventes et produire :
-
-  * Une liste des ventes supérieures à une valeur donnée (filter)
-  * Une liste des montants avec taxe ajoutée (map)
-  * Une somme totale avec `reduce`
-* Transformer la solution finale en une compréhension de liste.
-
----
-
-## Séquence 3. Modules et espaces de nommage
-
-**Contenu :**
-
-* Création et importation de modules (`import`, `from … import …`)
-* Espaces de nommage et packages
-* Organisation du code en plusieurs fichiers
-
-**Exercice :**
-
-* Réorganiser les fonctions des exercices précédents dans un module `utils.py`
-* Tester l'import et l'appel depuis un autre script.
-
----
-
-## Séquence 4. Introduction aux classes
-
-**Contenu :**
-
-* Définition de classe, constructeur `__init__`
-* Attributs d'instance et de classe
-* Méthodes spéciales : `__str__`, `__repr__`, `__eq__`
-* Notion de `property` et encapsulation
-
-**Exercice :**
-
-* Créer une classe `DataSet` capable de :
-
-  * Charger un fichier CSV
-  * Calculer des statistiques de base (moyenne, variance)
-  * Fournir une représentation lisible avec `__str__`
-
----
-
-## Séquence 5. Héritage et typage
-
-**Contenu :**
-
-* Héritage simple, polymorphisme
-* Redéfinition de méthodes
-* Typage et classes génériques (`Generic`, `TypeVar`)
-* Exemple d'enumérations
-
-**Exercice :**
-
-* Créer une classe `Shape` et deux sous-classes `Rectangle` et `Circle`
-* Implémenter `area()` et `perimeter()` selon le type de figure.
-* Démontrer le polymorphisme via une liste d'objets de formes différentes.
-
----
-
-## Séquence 6. Travaux pratiques finaux – Mini API d'analyse
-
-**Objectif :**
-Publier sous forme d'API REST les fonctions et classes conçues dans le cours.
-
-**Étapes :**
-
-1. Installer et configurer FastAPI et Uvicorn.
-2. Créer un projet `tp_fastapi` contenant :
-
-   * `main.py` (point d'entrée de l'API)
-   * `models.py` (classes `DataSet`, `Shape`)
-   * `utils.py` (fonctions analytiques)
-3. Définir des endpoints :
-
-   * `/analys` : calcule moyenne et variance à partir d'une liste passée en JSON
-   * `/shapes/area` : calcule l'aire d'une figure donnée
-4. Tester les routes avec `curl` ou `requests`.
-
-**Critères d'évaluation :**
-
-* Code structuré et commenté
-* Gestion correcte des erreurs d'entrée
-* Documentation automatique Swagger opérationnelle
-
----
-
-# Évaluation et prolongements
-
-Évaluation dans la partie Fast API.
-
-Elle se fera avec le mini-projet Fast API, voir la suite du programme du cours : [Fast API](./Part2_FastAPI.md)
+* Écrire des tests unitaires pour la classe `BankAccount`.
+* Vérifier le bon comportement de la méthode `withdraw()` lorsqu'un retrait dépasse le solde.
+* Tester la classe `Shape` et vérifier que chaque sous-classe implémente correctement `area()`.

@@ -1,204 +1,145 @@
-# **Formation FastAPI – Découverte et mise en pratique (1 journée)**
+## **Développement d’API avec FastAPI**
 
-## **Objectifs pédagogiques**
+### **1. Introduction et installation**
 
-* Comprendre les principes de base de FastAPI et du développement d'API REST
-* Structurer un petit projet FastAPI propre et modulaire
-* Manipuler les requêtes et réponses JSON, la validation de données avec Pydantic
-* Mettre en œuvre un mini projet API complet (analyse de données ou gestion d'objets)
+* Présentation du framework FastAPI et de ses principes (asynchrone, typé, performant).
+* Comparaison avec Flask et Django : positionnement et usages.
+* Installation et configuration de l’environnement :
 
----
+  * `fastapi`, `uvicorn`, `pydantic`, `requests`
+  * structure de projet (`app/`, `main.py`, `routers/`, `models/`, `tests/`)
+* Lancement d’un premier serveur local avec `uvicorn main:app --reload`.
 
-## **Matinée – Introduction et fondations**
-
-### **1. Introduction à FastAPI (≈ 45 min)**
-
-**Objectifs :** comprendre le cadre général et le positionnement de FastAPI.
-
-* Qu'est-ce qu'une API REST
-* Pourquoi FastAPI (asynchronisme, validation, documentation automatique)
-* Installation et mise en route (`pip install fastapi uvicorn`)
-* Structure minimale d'un projet :
-
-  ```
-  main.py
-  └── app/
-      ├── models.py
-      ├── routers/
-      └── utils.py
-  ```
-
-**Démonstration :**
-
-* Création d'un premier endpoint “Hello World”
-
-  ```python
-  from fastapi import FastAPI
-
-  app = FastAPI()
-
-  @app.get("/")
-  def read_root():
-      return {"message": "Bienvenue sur mon API"}
-  ```
-
-* Lancer le serveur avec :
-
-  ```
-  uvicorn main:app --reload
-  ```
+**Objectif :** comprendre l’architecture et exécuter une première route API.
 
 ---
 
-### **2. Les routes et les méthodes HTTP (≈ 1h)**
+### **2. Structure d’une application FastAPI**
 
-**Objectifs :** manipuler les routes et les méthodes principales.
-
-* Méthodes HTTP : GET, POST, PUT, DELETE
-* Paramètres de chemin et de requête (`@app.get("/items/{item_id}")`)
-* Requêtes avec corps JSON (`POST`)
-* Réponses et codes HTTP (`status_code`, `Response`)
-
-**Exemple :**
-
-```python
-from fastapi import FastAPI
-
-app = FastAPI()
-
-items = {"apple": 3, "banane": 5}
-
-@app.get("/items/{name}")
-def read_item(name: str):
-    return {"item": name, "stock": items.get(name, 0)}
-
-@app.post("/items/")
-def add_item(name: str, quantity: int):
-    items[name] = quantity
-    return {"message": f"{name} ajouté avec {quantity} unités"}
-```
-
-**Exercice guidé :**
-
-* Créer une API permettant de gérer un petit inventaire : ajouter, consulter, supprimer un article.
-
----
-
-### **3. Modélisation et validation avec Pydantic (≈ 1h15)**
-
-**Objectifs :** définir des schémas de données et valider les entrées.
-
-* Introduction à Pydantic (`BaseModel`)
-* Typage et validation automatique
-* Gestion des erreurs de validation
-* Documentation automatique Swagger (`/docs`) et ReDoc (`/redoc`)
-
-**Exemple :**
-
-```python
-from pydantic import BaseModel
-
-class Product(BaseModel):
-    name: str
-    price: float
-    quantity: int = 0
-
-@app.post("/product/")
-def add_product(produit: Product):
-    return {"product": product}
-```
+* Création de l’objet principal `FastAPI()`.
+* Définition de routes (`@app.get`, `@app.post`, `@app.put`, `@app.delete`).
+* Syntaxe des endpoints et retour d’objets Python ou de modèles.
+* Organisation du code : séparation en modules (`routers`, `schemas`, `models`).
+* Bonnes pratiques : typage, indentation, gestion des dépendances.
 
 **Exercice :**
-
-* Créer un modèle `User` avec champs : `name`, `email`, `age`
-* Implémenter une route POST `/user/` pour enregistrer un utilisateur et retourner un message de confirmation.
+Créer une API minimaliste exposant une route `/hello` renvoyant un message JSON personnalisé.
 
 ---
 
-## **Après-midi – Travaux pratiques : mini API complète**
+### **3. Schémas de données et validation avec Pydantic**
 
-### **TP : API d'analyse de données (≈ 3h à 3h30)**
+* Définition de modèles de données avec `BaseModel`.
+* Validation automatique des entrées utilisateur.
+* Champs optionnels, valeurs par défaut, alias et contraintes (`Field()`).
+* Sérialisation et transformation d’objets en JSON.
+* Exemple : modèle `User` avec validation d’email et longueur de mot de passe.
 
-**Objectif général :**
-Mettre en pratique les notions vues le matin en créant une API complète qui expose des fonctions d'analyse ou de calcul.
-
-#### **1. Cahier des charges**
-
-Créer une API offrant les fonctionnalités suivantes :
-
-* Endpoint `/analyse/` : reçoit une liste de nombres et renvoie moyenne, médiane et variance.
-* Endpoint `/comparaison/` : compare deux ensembles de données et indique lequel a la plus grande moyenne.
-* Endpoint `/dataset/{nom}` : enregistre un ensemble de données nommé en mémoire.
-
-#### **2. Structure du projet**
-
-```
-tp_fastapi/
-├── main.py
-├── models.py
-├── utils.py
-└── requirements.txt
-```
-
-#### **3. Étapes de développement**
-
-* Implémenter les calculs statistiques dans `utils.py`
-
-  ```python
-  from statistics import mean, median, variance
-
-  def analys_data(data: list[float]) -> dict:
-      return {
-          "mean": mean(data),
-          "median": median(data),
-          "variance": variance(data)
-      }
-  ```
-* Créer les modèles Pydantic dans `models.py`
-
-  ```python
-  from pydantic import BaseModel
-  from typing import List
-
-  class DataRequest(BaseModel):
-      values: List[float]
-  ```
-* Définir les routes FastAPI dans `main.py`
-
-  ```python
-  from fastapi import FastAPI
-  from models import DataRequest
-  from utils import analys_data
-
-  app = FastAPI()
-
-  @app.post("/analys/")
-  def analys(data: DataRequest):
-      return analys_data(data.values)
-  ```
-
-#### **4. Tests et validation**
-
-* Utiliser Swagger UI (`http://127.0.0.1:8000/docs`)
-* Envoyer des requêtes JSON :
-
-  ```json
-  {
-    "valeurs": [2, 4, 6, 8]
-  }
-  ```
-* Vérifier le retour JSON des statistiques calculées.
-
-#### **5. Extensions possibles**
-
-* Enregistrer les ensembles de données dans un dictionnaire global
-* Gérer la persistance via un fichier JSON ou une base SQLite
-* Ajouter un endpoint `/datasets` listant les ensembles enregistrés
+**Exercice :**
+Créer un modèle `Product` avec les champs `name`, `price`, `in_stock`.
+Valider que `price` soit positif et que `name` ne soit pas vide.
 
 ---
 
-## Evaluation méthode
+### **4. Gestion des erreurs et des statuts HTTP**
 
-Créez un devoir dans Teams et donner ce devoir à rendre soit sur la demi-journée, soit plus tard, pas plus d'une semaine pour le rendre.
+* Codes de statut (`200`, `201`, `400`, `404`, `500`, etc.).
+* Gestion des erreurs avec `HTTPException`.
+* Réponses personnalisées et messages d’erreur structurés.
+* Middleware et hooks pour journalisation et sécurité.
+* Bonnes pratiques : cohérence des statuts et messages explicites.
 
-Faire un QCM de rattrapage.
+**Exercice :**
+Modifier une route pour lever une `HTTPException` lorsque le produit demandé n’existe pas.
+
+---
+
+### **5. Méthodes HTTP et opérations CRUD**
+
+* Rappels sur les méthodes HTTP : `GET`, `POST`, `PUT`, `DELETE`.
+* Mise en œuvre d’un CRUD complet sur une ressource (`User`, `Product`, etc.).
+* Simulation de base de données avec une liste ou un dictionnaire Python.
+* Retour de listes, d’objets uniques, ou de statuts (`Response`, `status_code`).
+
+**Exercice :**
+Créer une API `/users` permettant :
+
+* d’ajouter un utilisateur,
+* de consulter la liste des utilisateurs,
+* de supprimer un utilisateur par son identifiant.
+
+---
+
+### **6. Gestion des dépendances et modularisation**
+
+* Utilisation du décorateur `Depends`.
+* Injection de dépendances (connexion, configuration, sécurité).
+* Organisation du code avec `APIRouter`.
+* Modularisation : séparation des routes et des modèles.
+
+**Exercice :**
+Séparer les routes `/users` et `/products` dans deux modules indépendants et les importer via `APIRouter`.
+
+---
+
+### **7. Intégration avec une base de données (approche légère)**
+
+* Introduction à SQLModel / SQLAlchemy (ou stockage en mémoire).
+* Connexion à une base SQLite.
+* Définition d’un modèle persistant (`User`, `Product`).
+* Création et lecture via ORM.
+* Notion de session et transaction.
+
+**Exercice :**
+Créer une base SQLite contenant des produits et exposer une route `/products` retournant le contenu de la table.
+
+---
+
+### **8. Documentation automatique et OpenAPI**
+
+* Documentation interactive avec `/docs` (Swagger UI) et `/redoc`.
+* Description automatique des paramètres, corps de requête, réponses.
+* Personnalisation du titre, de la description et des métadonnées de l’API.
+* Utilisation des annotations de type pour enrichir la documentation.
+
+**Exercice :**
+Personnaliser le titre et la description de l’API et vérifier la documentation interactive générée.
+
+---
+
+### **9. Tests automatisés d’API avec Pytest et HTTPX**
+
+* Installation de `pytest` et `httpx`.
+* Configuration d’un client de test pour FastAPI (`from fastapi.testclient import TestClient`).
+* Tests unitaires et d’intégration sur les endpoints (`client.get`, `client.post`).
+* Vérification des statuts et des contenus JSON.
+* Organisation du dossier `tests/` pour un projet API.
+
+**Exemple :**
+
+```python
+from fastapi.testclient import TestClient
+from main import app
+
+client = TestClient(app)
+
+def test_read_root():
+    response = client.get("/hello")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Hello, World!"}
+```
+
+**Exercices :**
+
+* Écrire des tests pour les routes CRUD `/users`.
+* Vérifier le retour des statuts (`201`, `404`) selon les cas.
+
+---
+
+## **Annexes – Bonnes pratiques de développement API**
+
+A. Structuration d’un projet FastAPI en production
+B. Utilisation de `logging` et configuration d’erreurs
+C. Modèles de réponses standardisées
+D. Intégration continue (CI) avec `pytest` et `coverage`
+E. Références : documentation officielle FastAPI, Pydantic et pytest

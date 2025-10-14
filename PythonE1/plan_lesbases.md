@@ -17,7 +17,7 @@ tp/ <-- sujet du tp
 
 ---
 
-## **Introduction et premiers pas**
+## 01 **Introduction**
 
 **Objectifs :**
 Installer Python, comprendre ce qu'est un langage interprété et exécuter ses premiers scripts.
@@ -43,7 +43,7 @@ Installer Python, comprendre ce qu'est un langage interprété et exécuter ses 
 
 ---
 
-## **Opérations et conditions**
+## 02 **Opérations et conditions**
 
 **Objectifs :**
 Découvrir la logique des décisions et les expressions booléennes.
