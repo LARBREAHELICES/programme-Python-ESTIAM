@@ -1,211 +1,481 @@
-# **Introduction à Python**
-
-## 1. Présentation de Python et de ses usages
-
-**Python** est un langage de programmation :
-
-* **interprété** : il s'exécute ligne par ligne, sans compilation préalable.
-* **multi-usage** : il sert aussi bien à la programmation web, à la data science, à l'intelligence artificielle qu'à la robotique.
-* **lisible et simple** : sa syntaxe proche du langage naturel en fait un langage accessible aux débutants.
-
-**Exemples d'usages courants :**
-
-* Développement web : *FastAPI, Django, Flask*
-* Analyse de données : *pandas, NumPy, matplotlib*
-* Intelligence artificielle : *TensorFlow, PyTorch*
-* Automatisation / scripts systèmes
-* Prototypage rapide et enseignement
+# **Python – Concepts intermédiaires**
 
 ---
 
-## 2. Installation et configuration de l'environnement
+## **Chapitre 1 – Rappel sur la portée des variables : la règle LEGB**
 
-### a. Installation de Python
+### **1.1. Définition**
 
-* Rendez-vous sur le site officiel : [https://www.python.org/downloads/](https://www.python.org/downloads/)
-* Téléchargez la dernière version stable (ex. 3.13).
-* Lors de l'installation sur Windows, cochez impérativement la case "Add Python to PATH".
-Cette option permet de rendre Python accessible directement depuis la console et d'exécuter vos programmes sur votre machine sans configuration supplémentaire.
+En Python, lorsqu'un nom (variable, fonction, etc.) est utilisé, l'interpréteur le cherche selon la règle **LEGB** :
 
-* Vérifiez l'installation dans le terminal :
+* **L – Local** : dans la fonction courante.
+* **E – Enclosing** : dans les fonctions englobantes (fonctions imbriquées).
+* **G – Global** : dans le module principal.
+* **B – Built-in** : dans les fonctions et noms prédéfinis de Python (`len`, `print`, etc.).
 
-  ```bash
-  python --version
-  ```
-
-  ou
-
-  ```bash
-  python3 --version
-  ```
+Cette hiérarchie permet à Python de savoir quelle variable utiliser à un instant donné.
 
 ---
 
-### b. Installation de VS Code
-
-VS Code est un éditeur léger et polyvalent. Mais vous avez aussi `Pycharm` un éditeur plus complet mais payant.
-
-1. Télécharger sur : [https://code.visualstudio.com](https://code.visualstudio.com)
-2. Installer l'**extension Python** (éditeur de Microsoft).
-3. Ouvrir un nouveau dossier de travail pour vos projets.
-4. Créer un fichier `main.py` pour vos premiers scripts.
-
----
-
-### c. Utilisation du terminal
-
-Le terminal permet d'exécuter directement vos scripts :
-
-```bash
-python main.py
-```
-
-ou selon votre système :
-
-```bash
-python3 main.py
-```
-
----
-
-### d. Création d'un environnement virtuel (`venv`)
-
-Chaque projet Python doit fonctionner dans un **environnement isolé**, pour éviter les conflits de dépendances.
-
-1. Créez un environnement virtuel :
-
-   ```bash
-   python -m venv env
-   ```
-2. Activez-le :
-
-   * **Windows :**
-
-     ```bash
-     env\Scripts\activate
-     ```
-   * **macOS / Linux :**
-
-     ```bash
-     source env/bin/activate
-     ```
-3. Installez les dépendances :
-
-   ```bash
-   pip install fastapi uvicorn
-   ```
-4. Désactivez l'environnement après usage :
-
-   ```bash
-   deactivate
-   ```
-
----
-
-## 3. Premier script Python
-
-Créer un fichier nommé `main.py` et écrire :
+### **1.2. Exemple simple**
 
 ```python
-# This is a comment: it is ignored by Python
+x = "global"
 
-# Display a message in the console
-print("Hello, world!")
-```
+def outer():
+    x = "enclosing"
+    def inner():
+        x = "local"
+        print("Dans inner :", x)
+    inner()
 
-Exécuter le script :
-
-```bash
-python main.py
+outer()
+print("Dans le module :", x)
 ```
 
 **Résultat :**
 
 ```
-Hello, world!
+Dans inner : local
+Dans le module : global
 ```
 
-### Points essentiels :
-
-* `#` sert à écrire un **commentaire** (non exécuté).
-* L'**indentation** (espaces en début de ligne) est obligatoire pour structurer le code.
-* `print()` affiche du texte ou une valeur dans la console.
+Python cherche `x` d'abord dans la portée locale (`inner`), puis dans `outer`, ensuite dans la portée globale.
 
 ---
 
-## 4. Variables et types de base
+### **1.3. Les mots-clés `global` et `nonlocal`**
 
-Une **variable** est un espace mémoire qui contient une valeur.
-En Python, le type est **déduit automatiquement** (typage dynamique).
-
-Exemples :
+#### `global` permet de modifier une variable déclarée au niveau du module :
 
 ```python
-name = "Alice"       # str (string)
-age = 20             # int (integer)
-height = 1.68        # float (decimal number)
-is_student = True    # bool (boolean)
+count = 0
+
+def increment():
+    global count
+    count += 1
+
+increment()
+print(count)  # 1
 ```
 
-Afficher leur contenu :
+#### `nonlocal` agit sur une variable d'une fonction englobante :
 
 ```python
-print(name, age, height, is_student)
-```
+def outer():
+    total = 0
+    def add():
+        nonlocal total
+        total += 1
+    add()
+    print(total)
 
-Python fournit des fonctions utiles :
-
-```python
-print(type(name))   # affiche <class 'str'>
-```
-
----
-
-## 5. Entrée utilisateur : `input()`
-
-La fonction `input()` permet de **récupérer une donnée saisie au clavier** :
-
-```python
-user_name = input("Enter your name: ")
-print("Hello", user_name + "!")
-```
-
-> ⚠️ Par défaut, la valeur renvoyée par `input()` est une **chaîne de caractères (`str`)**, même si l'utilisateur saisit un nombre.
-
----
-
-## 6. Conversion de types
-
-Pour effectuer des calculs, il faut **convertir les chaînes** en nombres avec les fonctions `int()` ou `float()` :
-
-```python
-num1 = input("Enter a number: ")
-num2 = input("Enter another number: ")
-
-# Convert strings to floats
-num1 = float(num1)
-num2 = float(num2)
-
-result = num1 + num2
-print("The sum is:", result)
-```
-
-Conversion inverse (vers une chaîne) :
-
-```python
-age = 20
-print("You are " + str(age) + " years old.")
+outer()  # 1
 ```
 
 ---
 
-## **Résumé de la séquence**
+### **1.4. Exercices**
 
-| Concept            | Exemple                       | Objectif                |
-| ------------------ | ----------------------------- | ----------------------- |
-| `print()`          | `print("Hello")`              | Afficher un texte       |
-| Commentaire        | `# This is a comment`         | Expliquer le code       |
-| Variable           | `x = 5`                       | Stocker une valeur      |
-| Type de base       | `int`, `float`, `str`, `bool` | Manipuler des données   |
-| Entrée utilisateur | `input()`                     | Lire une valeur clavier |
-| Conversion         | `int()`, `float()`, `str()`   | Adapter les types       |
+1. Créer une fonction imbriquée `outer()` / `inner()` où `inner()` incrémente une variable de `outer()` à l'aide de `nonlocal`.
+2. Écrire un compteur global (`count`) mis à jour par une fonction `increment()`.
+3. Expliquer le parcours de recherche de Python quand on appelle une variable dans une fonction imbriquée.
+
+---
+
+## **Chapitre 2 – Introduction aux types primitifs et aux objets**
+
+### **2.1. Typage dynamique**
+
+Python est **dynamiquement typé** :
+le type d'une variable est défini à l'exécution, pas à la déclaration.
+
+```python
+x = 10       # entier (int)
+x = "texte"  # devient une chaîne (str)
+```
+
+---
+
+### **2.2. Types primitifs**
+
+Les **types primitifs** sont les plus simples, directement gérés par l'interpréteur.
+
+| Type    | Exemple         | Description           |
+| ------- | --------------- | --------------------- |
+| `int`   | `x = 5`         | Entiers               |
+| `float` | `x = 3.14`      | Nombres décimaux      |
+| `bool`  | `x = True`      | Booléens              |
+| `str`   | `x = "Bonjour"` | Chaînes de caractères |
+
+Ces objets sont **immuables** : leur valeur ne peut pas être modifiée en place.
+
+Exemple :
+
+```python
+x = 5
+print(id(x))
+x += 1
+print(id(x))  # nouvelle adresse mémoire
+```
+
+---
+
+### **2.3. Types objets (collections)**
+
+Python propose aussi des types **complexes et mutables**, appelés objets de collection.
+
+| Type    | Exemple            | Mutabilité | Description             |
+| ------- | ------------------ | ---------- | ----------------------- |
+| `list`  | `[1, 2, 3]`        | Mutable    | Liste ordonnée          |
+| `tuple` | `(1, 2, 3)`        | Immuable   | Liste non modifiable    |
+| `dict`  | `{"a": 1, "b": 2}` | Mutable    | Dictionnaire clé-valeur |
+| `set`   | `{1, 2, 3}`        | Mutable    | Ensemble sans doublons  |
+
+---
+
+### **2.4. Exemple de manipulation d'objets**
+
+```python
+person = {"name": "Alice", "age": 20}
+person["age"] += 1
+print(person)  # {'name': 'Alice', 'age': 21}
+```
+
+```python
+fruits = ["pomme", "poire"]
+fruits.append("banane")
+print(fruits)  # ['pomme', 'poire', 'banane']
+```
+
+---
+
+### **2.5. Typage fort et conversion**
+
+Python ne convertit pas automatiquement les types :
+
+```python
+x = "5"
+y = 2
+# print(x + y)  # Erreur
+print(int(x) + y)  # 7
+```
+
+---
+
+### **Exercices**
+
+1. Créer une liste de nombres, calculer leur moyenne à l'aide de `sum()` et `len()`.
+2. Transformer un dictionnaire `{nom: age}` en ajoutant +1 à chaque âge.
+3. Afficher la différence entre un tuple et une liste (tester une modification).
+4. Expliquer ce qui se passe en mémoire quand on écrit `x += 1` pour un entier.
+
+---
+
+## **Chapitre 3 – Les compréhensions de liste**
+
+### **3.1. Définition**
+
+Une **compréhension de liste** permet de créer une nouvelle liste à partir d'une séquence existante, en une seule ligne.
+
+Forme générale :
+
+```python
+[expression for element in iterable if condition]
+```
+
+---
+
+### **3.2. Exemple simple**
+
+```python
+numbers = [1, 2, 3, 4, 5]
+squares = [n**2 for n in numbers]
+print(squares)  # [1, 4, 9, 16, 25]
+```
+
+Équivalent à :
+
+```python
+squares = []
+for n in numbers:
+    squares.append(n**2)
+```
+
+---
+
+### **3.3. Avec condition**
+
+```python
+even = [n for n in range(10) if n % 2 == 0]
+print(even)  # [0, 2, 4, 6, 8]
+```
+
+---
+
+### **3.4. Compréhensions imbriquées**
+
+```python
+pairs = [(x, y) for x in range(2) for y in range(3)]
+print(pairs)  # [(0,0), (0,1), (0,2), (1,0), (1,1), (1,2)]
+```
+
+---
+
+### **3.5. Transformation d'objets**
+
+```python
+names = ["Alice", "Bob", "Charlie"]
+upper_names = [name.upper() for name in names]
+print(upper_names)  # ['ALICE', 'BOB', 'CHARLIE']
+```
+
+---
+
+### **3.6. Application pratique**
+
+Filtrage et transformation d'un dictionnaire :
+
+```python
+students = {"Alice": 15, "Bob": 8, "Charlie": 12}
+passed = [name for name, grade in students.items() if grade >= 10]
+print(passed)  # ['Alice', 'Charlie']
+```
+
+---
+
+### **Exercices**
+
+1. Créer une liste contenant les carrés des nombres pairs de 0 à 20.
+2. Transformer une liste de chaînes en leur longueur (`["chat", "chien"] → [4, 5]`).
+3. Créer une liste des voyelles présentes dans une phrase sans doublons.
+4. À partir d'un dictionnaire `{nom: note}`, générer une liste des élèves admis (note >= 10).
+
+--- 
+
+## **Chapitre 4 – Le slicing (découpage de séquences)**
+
+### **4.1. Définition**
+
+Le **slicing** (ou découpage) est une manière compacte d'accéder à une **portion** d'une séquence en Python.
+Il fonctionne sur tous les objets **indexables et itérables** : `list`, `tuple`, `str`, etc.
+
+Syntaxe générale :
+
+```python
+sequence[start:stop:step]
+```
+
+* `start` : position de départ (incluse)
+* `stop` : position de fin (exclue)
+* `step` : pas (incrément, facultatif)
+
+---
+
+### **4.2. Exemples de base**
+
+```python
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+print(numbers[2:5])   # [2, 3, 4]
+print(numbers[:4])    # [0, 1, 2, 3]
+print(numbers[6:])    # [6, 7, 8, 9]
+print(numbers[::2])   # [0, 2, 4, 6, 8]
+```
+
+---
+
+### **4.3. Slicing négatif**
+
+Python autorise des **indices négatifs** : `-1` correspond au dernier élément, `-2` à l'avant-dernier, etc.
+
+```python
+letters = ['a', 'b', 'c', 'd', 'e']
+print(letters[-3:])     # ['c', 'd', 'e']
+print(letters[:-2])     # ['a', 'b', 'c']
+print(letters[::-1])    # ['e', 'd', 'c', 'b', 'a'] (inversion)
+```
+
+---
+
+### **4.4. Slicing sur les chaînes**
+
+Les chaînes (`str`) se comportent comme des séquences de caractères.
+
+```python
+word = "Python"
+print(word[0:3])    # 'Pyt'
+print(word[-3:])    # 'hon'
+print(word[::-1])   # 'nohtyP'
+```
+
+---
+
+### **4.5. Slicing sur les tuples**
+
+Le slicing s'applique aussi sur les tuples, mais comme ils sont immuables, le résultat est toujours **un nouveau tuple**.
+
+```python
+values = (10, 20, 30, 40, 50)
+print(values[1:4])  # (20, 30, 40)
+```
+
+---
+
+### **4.6. Modification partielle d'une liste**
+
+Contrairement aux chaînes ou tuples, les **listes sont mutables** :
+on peut remplacer une portion par une autre.
+
+```python
+numbers = [0, 1, 2, 3, 4, 5]
+numbers[2:4] = [20, 30]
+print(numbers)  # [0, 1, 20, 30, 4, 5]
+```
+
+On peut même **supprimer** des éléments par slicing :
+
+```python
+numbers[1:3] = []
+print(numbers)  # [0, 30, 4, 5]
+```
+
+---
+
+### **4.7. Copie rapide d'une liste**
+
+Une copie complète d'une séquence peut se faire via `[:]` :
+
+```python
+a = [1, 2, 3]
+b = a[:]         # nouvelle liste
+b.append(4)
+print(a)  # [1, 2, 3]
+print(b)  # [1, 2, 3, 4]
+```
+
+Cela crée une **copie superficielle**.
+
+---
+
+### **4.8. Slicing et compréhension**
+
+On peut combiner slicing et compréhension pour manipuler facilement des sous-listes.
+
+```python
+numbers = list(range(10))
+even_squares = [x**2 for x in numbers[::2]]
+print(even_squares)  # [0, 4, 16, 36, 64]
+```
+
+---
+
+### **Exercices**
+
+1. À partir d'une liste de 10 éléments, afficher :
+
+   * les 3 premiers éléments,
+   * les 3 derniers,
+   * un élément sur deux.
+2. Inverser une chaîne de caractères en une ligne grâce au slicing.
+3. Extraire le mot `"Python"` de la chaîne `"Je code en Python tous les jours"`.
+4. Supprimer les éléments d'indice pair d'une liste donnée.
+5. Créer une copie d'une liste, modifier la copie, et vérifier que l'originale n'est pas affectée.
+
+---
+
+# **Chapitre 5 – Fonctions lambda et application aux compréhensions**
+
+---
+
+### **5.1. Qu'est-ce qu'une fonction lambda ?**
+
+Une **lambda** est une fonction **anonyme** (sans nom explicite), utile pour écrire des opérations simples et courtes.
+
+Syntaxe :
+
+```python
+lambda arguments: expression
+```
+
+Elle retourne **automatiquement** le résultat de l'expression (pas besoin de `return`).
+
+**Exemple :**
+
+```python
+add = lambda a, b: a + b
+print(add(2, 3))  # 5
+```
+
+---
+
+### **5.2. Lambdas et fonctions d'ordre supérieur**
+
+Les lambdas sont souvent utilisées avec des fonctions comme :
+
+* `map()` pour transformer des éléments,
+* `filter()` pour en filtrer certains,
+* `sorted()` pour trier selon un critère.
+
+**Exemples :**
+
+```python
+numbers = [1, 2, 3, 4, 5]
+
+# Doubler chaque élément
+doubles = list(map(lambda x: x * 2, numbers))
+print(doubles)  # [2, 4, 6, 8, 10]
+
+# Garder uniquement les pairs
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+print(evens)  # [2, 4]
+```
+
+---
+
+### **5.3. Lambdas dans les compréhensions**
+
+On peut utiliser une lambda **à l'intérieur d'une compréhension de liste** pour appliquer un traitement léger à chaque élément.
+
+**Exemple :**
+
+```python
+names = ["alice", "bob", "charlie"]
+upper_names = [(lambda n: n.capitalize())(name) for name in names]
+print(upper_names)  # ['Alice', 'Bob', 'Charlie']
+```
+
+Autre exemple plus calculatoire :
+
+```python
+numbers = range(6)
+squares_even = [(lambda x: x**2)(n) for n in numbers if n % 2 == 0]
+print(squares_even)  # [0, 4, 16, 36]
+```
+
+---
+
+### **5.4. Comparaison avec une fonction classique**
+
+Les lambdas sont utiles pour les **fonctions temporaires**, mais il est préférable d'utiliser une fonction classique (`def`)
+quand la logique devient plus complexe.
+
+```python
+# Lambda (simple)
+triple = lambda x: x * 3
+
+# Fonction classique (plus claire pour des traitements longs)
+def triple(x):
+    return x * 3
+```
+
+---
+
+### **5.5. Exercices**
+
+1. Utiliser une lambda avec `map()` pour transformer une liste de températures Celsius en Fahrenheit.
+2. Créer une lambda pour vérifier si une chaîne commence par une majuscule.
+3. À partir d'une liste de nombres, générer avec une **compréhension** et une **lambda** une nouvelle liste des cubes pairs.
+4. Trier une liste de tuples `(nom, âge)` selon l'âge avec `sorted()` et une lambda.
+
+---
