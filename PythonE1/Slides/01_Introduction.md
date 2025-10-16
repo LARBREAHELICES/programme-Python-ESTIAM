@@ -1,3 +1,11 @@
+---
+marp: true
+theme: default
+paginate: true
+class: lead
+---
+
+
 # **Python – Concepts intermédiaires**
 
 ---
@@ -32,6 +40,8 @@ def outer():
 outer()
 print("Dans le module :", x)
 ```
+
+---
 
 **Résultat :**
 
@@ -82,6 +92,8 @@ Les **types primitifs** sont les plus simples, directement gérés par l'interpr
 | `str`   | `x = "Bonjour"` | Chaînes de caractères |
 
 Ces objets sont **immuables** : leur valeur ne peut pas être modifiée en place.
+
+---
 
 Exemple :
 
@@ -361,6 +373,9 @@ print(even_squares)  # [0, 4, 16, 36, 64]
    * les 3 premiers éléments,
    * les 3 derniers,
    * un élément sur deux.
+
+---
+
 ```python
 students = [
     ("Alice", 15),
@@ -375,6 +390,9 @@ students = [
     ("Jules", 10)
 ]
 ```
+
+---
+
 2. Inverser une chaîne de caractères en une ligne grâce au slicing.
 3. Extraire le mot `"Python"` de la chaîne `"Je code en Python tous les jours"`.
 4. Supprimer les éléments d'indice pair d'une liste donnée.
@@ -415,6 +433,8 @@ Les lambdas sont souvent utilisées avec des fonctions comme :
 * `filter()` pour en filtrer certains,
 * `sorted()` pour trier selon un critère.
 
+---
+
 **Exemples :**
 
 ```python
@@ -442,6 +462,8 @@ names = ["alice", "bob", "charlie"]
 upper_names = [(lambda n: n.capitalize())(name) for name in names]
 print(upper_names)  # ['Alice', 'Bob', 'Charlie']
 ```
+
+---
 
 Autre exemple plus calculatoire :
 
@@ -476,4 +498,3 @@ def triple(x):
 3. À partir d'une liste de nombres, générer avec une **compréhension** et une **lambda** une nouvelle liste des cubes pairs.
 4. Trier une liste de tuples `(nom, âge)` selon l'âge avec `sorted()` et une lambda.
 
----
